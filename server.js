@@ -49,6 +49,11 @@ app.get('/new', function(req, res) {
     res.send(view.newNotePage(getTimeStamp() + md5(Math.random())));
 });
 
+app.get('/all', function(req, res) {
+    storage.getAllNotes().then(notes => notes
+        ? res.send(view.renderNotesList(notes))
+        : notFound(res));
+});
 app.post('/note', function(req, res) {
     var body = req.body,
         session = body.session,

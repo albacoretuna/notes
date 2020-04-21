@@ -19,6 +19,36 @@ var renderPage = (id, title, content, footer, blackList) => pageTemplate
   .replace("%CONTENT%", content.replace(/<meta.*?>/gi, "").replace(/<script[\s\S.]*?\/script>/gi, ""))
   .replace("%FOOTER%", footer || "");
 
+var search = `
+<div><label>Filter </label><input id="searchBox" type="text"></div>
+<script>
+$(function() {
+var $notes = $('#notesList li');
+$('#searchBox').keyup(function() {
+    var re = new RegExp($(this).val(), "i"); // "i" means it's case-insensitive
+    $notes.show().filter(function() {
+        return !re.test($(this).text());
+    }).hide();
+});
+});
+</script>
+`;
+var notesList = (list) => {
+    var component= search + '<ul id="notesList" class="notes-list">';
+    list.forEach((note) => {
+        component += `<li><a href="${note.id}">${deriveTitle(note.text)} -  ${note.id}</a></li>`;
+    });
+    component += '</ul>';
+    return component;
+};
+
+var renderNotesList = (notes) => pageTemplate
+    .replace("%HEADER%", "<div id='hero'><h1>All Notes</h1><div>")
+  .replace("%TITLE%", "All notes")
+  .replace("%FOOTER%", "<a href='/'>Homepage</a>")
+  .replace("%CONTENT%", notesList(notes));
+
+module.exports.renderNotesList = renderNotesList;
 marked.setOptions({
   langPrefix: "hljs lang-",
   highlight: code => hljs.highlightAuto(code).value,
@@ -26,7 +56,7 @@ marked.setOptions({
 
 module.exports.renderPage = renderPage;
 
-module.exports.renderStats = note => renderPage(note.id, deriveTitle(note.text), 
+module.exports.renderStats = note => renderPage(note.id, deriveTitle(note.text),
   `<h2>Statistics</h2>
   <table>
     <tr><td>Published</td><td>${note.published}</td></tr>
@@ -34,11 +64,11 @@ module.exports.renderStats = note => renderPage(note.id, deriveTitle(note.text),
     <tr><td>Views</td><td>${note.views}</td></tr>
   </table>`);
 
-module.exports.renderTOS = () => 
+module.exports.renderTOS = () =>
   renderPage("tos", "Terms of Service", marked(TOS));
 
 module.exports.renderNote = (note, blackList) => renderPage(note.id,
-  deriveTitle(note.text), 
+  deriveTitle(note.text),
   marked(note.text),
   footerTemplate.replace(/%LINK%/g, note.id),
   blackList);
