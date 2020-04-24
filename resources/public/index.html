@@ -1,24 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Temporary notes for frosmo internal use</title>
-	<meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<link href="/style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-	<div id="hero">
-		<h1>Frosmo NoteHub</h1>
-		<a class="landing-button" href="/new" style="color: white">New Note</a>
-		<a class="landing-button demo" href="/all" style="color: white">All Notes</a>
-		<h3>Use this for temporary notes inside frosmo office</h3>
-		<h3>All notes are public and accessible with their unique URL</h3>
-		<h3>Use it as a pastebin for temporary note, code snippets</h3>
-		<br>
-	</div>
-	<div id="dashed-line"></div>
-	<footer>
-			Source code @ <a href="https://github.com/chmllr/NoteHub">GitHub</a>
-	</footer>
-</body>
+  <head>
+    <title>Forget Pad</title>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+    <script>
+      if (location.protocol !== "https:") {
+        location.replace(
+          `https:${location.href.substring(location.protocol.length)}`
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <div id="hero">
+      <h1>Forget Pad</h1>
+      <a class="landing-button" href="/new" style="color: white">New Note</a>
+      <div class="feature-container">
+        <h3>
+          How it works
+        </h3>
+        <ul class="feature-list">
+          <li>
+            After creating a note you get a short url
+          </li>
+          <li>
+            You can read the note on any browser using that url.
+          </li>
+          <li>
+            The note will be deleted after opened once or after 5 minutes from the
+            time it was created!
+          </li>
+          <li>The note is public, anyone with the link can read it once!</li>
+        </ul>
+      </div>
+
+      <br />
+    </div>
+    <footer>
+      Source code @ <a href="https://gitlab.com/albacore/notes">Gitlab</a>
+    </footer>
+  </body>
 </html>

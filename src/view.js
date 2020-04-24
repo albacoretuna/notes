@@ -33,27 +33,7 @@ $('#searchBox').keyup(function() {
 });
 </script>
 `;
-var notesList = (list) => {
-    var component= search + '<ul id="notesList" class="notes-list">';
-    list.forEach((note) => {
-        component += `<li><a href="${note.id}">${deriveTitle(note.text)} -  ${note.id}</a></li>`;
-    });
-    component += '</ul>';
-    return component;
-};
-
-var renderNotesList = (notes) => pageTemplate
-    .replace("%HEADER%", "<div id='hero'><h1>All Notes</h1><div>")
-  .replace("%TITLE%", "All notes")
-  .replace("%FOOTER%", "<a href='/'>Homepage</a>")
-  .replace("%CONTENT%", notesList(notes));
-
-module.exports.renderNotesList = renderNotesList;
-marked.setOptions({
-  langPrefix: "hljs lang-",
-  highlight: code => hljs.highlightAuto(code).value,
-});
-
+ 
 module.exports.renderPage = renderPage;
 
 module.exports.renderStats = note => renderPage(note.id, deriveTitle(note.text),
